@@ -8,6 +8,8 @@ const port = 3000;
 const url = 'mongodb+srv://sarasavi:sarasavi@sarasavidrivingschool.8wcadpf.mongodb.net/?retryWrites=true&w=majority';
 
 
+const QuizRoute = require("./src/routes/Quiz.route");
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -31,6 +33,9 @@ connectDB(url , {}).then(()=>{
 }).catch((err)=>{
   console.error('Connection Error',err);
 })
+
+app.use("/quiz", QuizRoute);
+
 
 
 // app.listen(port, () => {
