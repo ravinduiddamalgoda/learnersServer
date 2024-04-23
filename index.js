@@ -3,7 +3,20 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
+const dotenv = require('dotenv');
+const authRouter = require('./src/routes/auth.route.js');
+const cookieParser = require('cookie-parser');
+
 const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+
+
+
+dotenv.config();
+
+
 const port = 3000;
 const url = 'mongodb+srv://sarasavi:sarasavi@sarasavidrivingschool.8wcadpf.mongodb.net/?retryWrites=true&w=majority';
 
@@ -13,6 +26,8 @@ const userRouter = require("./src/routes/User.route");
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use('/api/auth', authRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
