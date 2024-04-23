@@ -14,6 +14,9 @@ const QuizPackageRoute = require("./src/routes/QuizPackage.route");
 
 const userRouter = require("./src/routes/User.route");
 
+const PhysicalTrainingRoute = require("./src/routes/PhysicalTrain.route");
+
+const EnrollPTSRouter = require("./src/routes/EnrollPTS.route");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -43,7 +46,9 @@ app.use("/quiz", QuizRoute);
 
 app.use("/quizPackage", QuizPackageRoute);
 
-app.use("/login", userRouter);
+app.use("/user", userRouter);
+app.use("/pts", PhysicalTrainingRoute);
+app.use("/enrollPTS", EnrollPTSRouter);
 
 
 

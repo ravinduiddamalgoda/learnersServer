@@ -28,7 +28,22 @@ const PhysicalTrainingSchema = new mongoose.Schema({
     maxCount: {
         type: Number,
         required: true
+    },
+    status : {
+        type:String ,
+        default: "pending" , 
+        enum : ["pending" , "completed"]
+    },
+    // enrolledUsers: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User'
+    // }]
+    currentCount: {
+        type: Number,
+        default: 0,
+        required: true
     }
+
 });
 
 const PhysicalTraining = mongoose.model('PhysicalTraining', PhysicalTrainingSchema);
