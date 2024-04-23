@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
+
 const quizPackageSchema = new mongoose.Schema({
-    quizPackageID : {
+    quizPackageID: {
         type: String,
         required: true,
         unique: true
@@ -10,9 +11,13 @@ const quizPackageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    quiz: {
-        type: Array,
+    quizzes: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Quiz',
         required: true
-    }
-    
+    }]
 });
+
+const QuizPackage = mongoose.model('QuizPackage', quizPackageSchema);
+
+module.exports = QuizPackage;

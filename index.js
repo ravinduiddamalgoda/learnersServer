@@ -9,6 +9,7 @@ const url = 'mongodb+srv://sarasavi:sarasavi@sarasavidrivingschool.8wcadpf.mongo
 
 
 const QuizRoute = require("./src/routes/Quiz.route");
+const QuizPackageRoute = require("./src/routes/QuizPackage.route");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -35,6 +36,7 @@ connectDB(url , {}).then(()=>{
 })
 
 app.use("/quiz", QuizRoute);
+app.use("/quizPackage", QuizPackageRoute);
 
 
 
