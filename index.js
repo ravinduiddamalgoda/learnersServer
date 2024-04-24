@@ -9,6 +9,12 @@ const url = 'mongodb+srv://sarasavi:sarasavi@sarasavidrivingschool.8wcadpf.mongo
 
 
 app.use(cors());
+ // cors({
+ //   origin: 'http://localhost:3000',
+ //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+ //   allowedHeaders: ['Content-Type'],
+ // })
+ // );
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
@@ -32,7 +38,12 @@ connectDB(url , {}).then(()=>{
   console.error('Connection Error',err);
 })
 
+const vehicleRouter = require("./routes/vehicle.js");
 
+app.use("/vehicle", vehicleRouter);
 // app.listen(port, () => {
 //   console.log(`Server is running on port ${port}`);
 // });
+const revenueRouter = require("./routes/revenue.js");
+
+app.use("/revenue", revenueRouter);
