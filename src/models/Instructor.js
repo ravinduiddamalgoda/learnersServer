@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const InstructorSchema =new mongoose.Schema({
+const instructorSchema =new mongoose.Schema({
     InstructorID:{
         type: String,
         unique: true,
@@ -10,7 +10,7 @@ const InstructorSchema =new mongoose.Schema({
         type: String , 
         require:true
     } ,
-    InstructorEmail: {
+    email: {
         type:String,
         require:true , 
         unique: true,
@@ -21,13 +21,21 @@ const InstructorSchema =new mongoose.Schema({
         require: true
     } ,
     
-    InstructorExpierince:{
+    InstructorExperience:{
         type:Number, 
         require: true
     } , 
-    InstructorPassword:{
+    password:{
         type:String , 
         require: true
+    },
+    isInstructor: {
+        type: Boolean,
+        default: true,
     }
 
-});
+},{ timestamps: true });
+
+const Instructor = mongoose.model('Instructor', instructorSchema);
+
+module.exports = Instructor;
