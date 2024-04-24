@@ -37,10 +37,15 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ['male', 'female', 'other'],
+        enum: ['Male', 'Female', 'other', ],
         required: true
+    },
+    isStudent: {
+        type: Boolean,
+        default: true,
     }
-});
+      
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 
