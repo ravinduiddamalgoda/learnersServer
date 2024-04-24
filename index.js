@@ -32,12 +32,6 @@ const PhysicalTrainingRoute = require("./src/routes/PhysicalTrain.route");
 const EnrollPTSRouter = require("./src/routes/EnrollPTS.route");
 
 app.use(cors());
- // cors({
- //   origin: 'http://localhost:3000',
- //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
- //   allowedHeaders: ['Content-Type'],
- // })
- // );
 app.use(bodyParser.json());
 
 app.use('/api/auth', authRouter);
@@ -77,6 +71,3 @@ app.use("/enrollPTS", EnrollPTSRouter);
 // app.listen(port, () => {
 //   console.log(`Server is running on port ${port}`);
 // });
-const revenueRouter = require("./routes/revenue.js");
-
-app.use("/revenue", revenueRouter);
