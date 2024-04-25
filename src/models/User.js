@@ -6,6 +6,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true
@@ -20,7 +28,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     phoneNumber: {
-        type: String,
+          type: String,
         required: true
     },
     address: {
@@ -29,10 +37,15 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ['male', 'female', 'other'],
+        enum: ['Male', 'Female', 'other', ],
         required: true
+    },
+    isStudent: {
+        type: Boolean,
+        default: true,
     }
-});
+      
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 
