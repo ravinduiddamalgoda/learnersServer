@@ -62,11 +62,13 @@ exports.signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const adminUser = await Admin.findOne({ email });
-    const normalUser = await User.findOne({ email });
+    // const normalUser = await User.findOne({ email });
     const instructorUser = await Instructor.findOne({ email });
 
-    const validUser = adminUser || normalUser || instructorUser;
+    // const validUser = adminUser || normalUser || instructorUser;
 
+    const validUser = adminUser || instructorUser;
+    
     if (!validUser) {
       return next(errorHandler(404, 'User not found!'));
     }
