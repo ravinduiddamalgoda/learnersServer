@@ -4,8 +4,10 @@ const ChatCtrl = require("../controller/Chat.ctrl");
 
 ChatRoute.post("/creategroup", ChatCtrl.createGroupChat);
 ChatRoute.post("/sendmessage", ChatCtrl.sendMessage);
-ChatRoute.get("/searchgroup", ChatCtrl.searchGroups);
+ChatRoute.post("/searchgroup", ChatCtrl.searchGroups);
 ChatRoute.get("/getallgroups", ChatCtrl.allGroups);
-ChatRoute.get("/getmessages", ChatCtrl.getMessages);
+ChatRoute.post("/getmessages", ChatCtrl.getMessages);
+ChatRoute.post("/updatemessage", ChatCtrl.updateMessage);
+ChatRoute.delete("/deletemessage/:messageId", ChatCtrl.deleteMessage);
 
 module.exports = ChatRoute;
