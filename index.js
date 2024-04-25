@@ -3,19 +3,38 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
+const dotenv = require('dotenv');
+const authRouter = require('./src/routes/auth.route.js');
+const cookieParser = require('cookie-parser');
+
 const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+
+
+
+dotenv.config();
+
+
 const port = 3000;
 const url = 'mongodb+srv://sarasavi:sarasavi@sarasavidrivingschool.8wcadpf.mongodb.net/?retryWrites=true&w=majority';
 
 
+const QuizRoute = require("./src/routes/Quiz.route");
+
+const QuizPackageRoute = require("./src/routes/QuizPackage.route");
+
+const userRouter = require("./src/routes/User.route");
+
+const PhysicalTrainingRoute = require("./src/routes/PhysicalTrain.route");
+
+const EnrollPTSRouter = require("./src/routes/EnrollPTS.route");
+
 app.use(cors());
- // cors({
- //   origin: 'http://localhost:3000',
- //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
- //   allowedHeaders: ['Content-Type'],
- // })
- // );
 app.use(bodyParser.json());
+
+app.use('/api/auth', authRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -38,12 +57,17 @@ connectDB(url , {}).then(()=>{
   console.error('Connection Error',err);
 })
 
-const vehicleRouter = require("./routes/vehicle.js");
+app.use("/quiz", QuizRoute);
 
-app.use("/vehicle", vehicleRouter);
+app.use("/quizPackage", QuizPackageRoute);
+
+app.use("/user", userRouter);
+app.use("/pts", PhysicalTrainingRoute);
+app.use("/enrollPTS", EnrollPTSRouter);
+
+
+
+
 // app.listen(port, () => {
 //   console.log(`Server is running on port ${port}`);
 // });
-const revenueRouter = require("./routes/revenue.js");
-
-app.use("/revenue", revenueRouter);

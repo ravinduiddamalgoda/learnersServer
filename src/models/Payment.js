@@ -13,18 +13,6 @@ const paymentSchema = new mongoose.Schema({
     dateTime: {
         type: Date,
         default: Date.now
-    },
-    studentName: {
-        type: String,
-        default: true
-    },
-    remarks: {
-        type: String,
-        required: true
-    },
-    Amount: {
-        type: Number,
-        required: true
     }
 });
 
