@@ -24,8 +24,16 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const token = await UserService.loginUser(username, password);
-        res.status(200).json({ token });
+        const user = await UserService.loginUser(username, password);
+        if(!user){
+            throw new Error("Invalid credentials");
+        }
+        const token =  jwt.sign({id: user.userID, isAdmin: false}, process.env.JWT_SECRET, {expiresIn: '3d'}); 
+        user.password = undefined;
+        res
+        .cookie('access_token', token, { httpOnly: true })
+        .status(200)
+        .json(user)
     } catch (error) {
         res.status(401).json({ message: "Invalid credentials" });
     }

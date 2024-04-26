@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 async function findID(accNo) {
   const existingAccount = await User.findOne({
@@ -28,6 +29,7 @@ function generateID() {
 
 async function loginUser(username, password) {
   const user = await User.findOne({ username });
+  
 
   if (!user) {
     throw new Error("User not found");
@@ -38,6 +40,8 @@ async function loginUser(username, password) {
   if (!passwordMatch) {
     throw new Error("Invalid password");
   }
+
+ 
 
   return user;
 }
