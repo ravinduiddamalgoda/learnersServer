@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
         res
         .cookie('access_token', token, { httpOnly: true })
         .status(200)
-        .json(user)
+        .json({user: user})
     } catch (error) {
         res.status(401).json({ message: "Invalid credentials" });
     }
