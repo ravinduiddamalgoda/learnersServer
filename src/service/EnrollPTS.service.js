@@ -55,10 +55,34 @@ const getAllEnrollPTS  = async () => {
     }
 }
 
+const deleteEnrollByStudentID = async (id) => {
+    try {
+        const data = await EnrollPTS.findOneAndDelete({userID:id});
+        if(data){
+            return data;
+        }else{
+            throw new Error('No Student found');
+        }
+    }catch(err){
+        console.error('Error in getEnrollPTS:', err);
+        throw err;
+    }
+}
+
+const getPTSBySessionID = async (id) => {
+    try {
+        const data = await EnrollPTS.findOne({sessionID : id});
+        return data;
+    }catch(err){
+        console.error('Error in getEnrollPTS:', err);
+        throw err;
+    }
+}
 module.exports = {
     addEnrollPTS,
     getEnrollPTS,
     getEnrollPTSById,
     getEnrollPTSBySessionID ,
-    getAllEnrollPTS
+    getAllEnrollPTS,
+    deleteEnrollByStudentID
 }
