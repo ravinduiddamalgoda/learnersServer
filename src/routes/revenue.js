@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let Payment = require("../src/models/Payment");
+let Payment = require("../models/Payment");
 
 router.route("revenue/add").post((req, res) => {
 

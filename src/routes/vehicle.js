@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let Vehicle = require("../src/models/Vehicle");
+let Vehicle = require("../models/Vehicle");
 
 router.route("/add").post(async (req, res) => {
     const { vehicleID, vehicleNO, vehicleType, transmissionType, fuelType, availability, studentCnt } = req.body;
@@ -37,6 +37,7 @@ router.route("/add").post(async (req, res) => {
 router.route("/").get((req, res) => {
 
     Vehicle.find().then((vehicles) => {
+        console.log(vehicles);
         res.json(vehicles)
 }).catch((err) => {
     console.log(err);
