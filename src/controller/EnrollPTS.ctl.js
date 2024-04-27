@@ -15,7 +15,8 @@ const enrollPTS = async (req, res) => {
         const sessionData = await PhysicalTrainingService.GetPTSByID(sessionID);
         const email = userData.email;
         const subject = 'Physical Training Session';
-        const text = `You have successfully enrolled in the Physical Training Session on ${sessionData.date} at ${sessionData.time} in ${session.location}.`;
+        const text = `You have successfully enrolled in the Physical Training Session on ${sessionData.date.toISOString().split("T")[0]} at ${sessionData.time} in ${session.location}.`;
+        //console.log("date:", sessionData.date.toISOString().split("T")[0]);
         await mail.sendmail(email, subject, text);
         await notify.sendNotification(userData.phoneNumber, text);
 
@@ -36,7 +37,31 @@ const getAllEnrollPTS = async (req, res) => {
     }
 }
 
+const deleteByStudentID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await EnrollPTSService.deleteEnrollByStudentID(id);
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Error in deleteByStudentID:", error);
+        res.status(500).json({ message: error.message });
+    }
+}
+const getEnrollPTSBySessionID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await EnrollPTSService.getEnrollPTSBySessionID(id);
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Error in getEnrollPTSBySessionID:", error);
+        res.status(500).json({ message: error.message });
+    }
+
+}
+
 module.exports = {
     enrollPTS,
-    getAllEnrollPTS
+    getAllEnrollPTS,
+    deleteByStudentID,
+    getEnrollPTSBySessionID
 }
