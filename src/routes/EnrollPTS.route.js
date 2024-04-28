@@ -5,6 +5,6 @@ const EnrollPTSRouter = express.Router();
 
 EnrollPTSRouter.post('/add', EnrollPTSController.enrollPTS);
 EnrollPTSRouter.get('/', EnrollPTSController.getAllEnrollPTS);
-EnrollPTSRouter.delete('del/st/:id', EnrollPTSController.deleteByStudentID);
+EnrollPTSRouter.delete('del/:id', EnrollPTSController.deleteByID);
 EnrollPTSRouter.get('/:id', EnrollPTSController.getEnrollPTSBySessionID);
 module.exports = EnrollPTSRouter;

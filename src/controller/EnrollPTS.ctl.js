@@ -37,10 +37,10 @@ const getAllEnrollPTS = async (req, res) => {
     }
 }
 
-const deleteByStudentID = async (req, res) => {
+const deleteByID = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await EnrollPTSService.deleteEnrollByStudentID(id);
+        const data = await EnrollPTSService.deleteEnrollByID(id);
         res.status(200).json(data);
     } catch (error) {
         console.error("Error in deleteByStudentID:", error);
@@ -62,6 +62,6 @@ const getEnrollPTSBySessionID = async (req, res) => {
 module.exports = {
     enrollPTS,
     getAllEnrollPTS,
-    deleteByStudentID,
+    deleteByID,
     getEnrollPTSBySessionID
 }
