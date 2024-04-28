@@ -1,6 +1,7 @@
 const UserService  = require('../service/User.service');
 const mail = require('../service/SendEmail');
 const notify = require('../service/SendSMS');
+const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
     
@@ -24,7 +25,9 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
+        console.log(username , password);
         const user = await UserService.loginUser(username, password);
+        // console.log(user); 
         if(!user){
             throw new Error("Invalid credentials");
         }
