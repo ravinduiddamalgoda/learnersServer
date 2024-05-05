@@ -2,7 +2,7 @@ const router = require("express").Router();
 let Vehicle = require("../models/Vehicle");
 
 router.route("/add").post(async (req, res) => {
-    const { vehicleID, vehicleNO, vehicleType, transmissionType, fuelType, availability, studentCnt } = req.body;
+    const { vehicleID, vehicleNO, vehicleType, transmissionType, fuelType, availability, studentCnt   } = req.body;
 
     try {
         // Check if the vehicle number already exists in the database
@@ -20,6 +20,8 @@ router.route("/add").post(async (req, res) => {
             fuelType,
             availability: Boolean(availability), // Convert to Boolean
             studentCnt: Number(studentCnt) // Convert to Number
+            
+         
         });
 
         // Save the new vehicle to the database
@@ -63,7 +65,8 @@ router.route("/update/:id").put(async (req, res) => {
         transmissionType,
         fuelType,
         availability,
-        studentCnt
+        studentCnt,
+        
       };
   
       const update = await Vehicle.findByIdAndUpdate(vehicleID, updateVehicle);
