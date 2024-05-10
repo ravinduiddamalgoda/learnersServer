@@ -42,6 +42,9 @@ const PhysicalTrainingSchema = new mongoose.Schema({
         type: Number,
         default: 0,
         required: true
+    },
+    instructorQualification:{
+        type: String 
     }
 
 });

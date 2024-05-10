@@ -30,7 +30,8 @@ const AddPhysicalTraining = async (
   location,
   vehicleID,
   instructorID,
-  maxCount
+  maxCount ,
+  instructorQualification
 ) => {
   const sessionID = generateID();
   try {
@@ -42,6 +43,7 @@ const AddPhysicalTraining = async (
       vehicleID,
       instructorID,
       maxCount,
+      instructorQualification
     });
     return await newPhysicalTraining.save();
   } catch (error) {

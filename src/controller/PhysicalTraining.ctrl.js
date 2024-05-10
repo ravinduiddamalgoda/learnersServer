@@ -5,8 +5,8 @@ const notify = require('../service/SendSMS');
 
 const addPTS = async (req , res) => {
     try{
-        const {date , time , location , vehicleID , instructorID ,  maxCount } = req.body;
-        const newPTS = await PhysicalTrainingService.AddPhysicalTraining(date , time , location , vehicleID , instructorID , maxCount); 
+        const {date , time , location , vehicleID , instructorID ,  maxCount, instructorQualification} = req.body;
+        const newPTS = await PhysicalTrainingService.AddPhysicalTraining(date , time , location , vehicleID , instructorID , maxCount , instructorQualification); 
         if(newPTS){
             res.status(201).json(newPTS);
         }

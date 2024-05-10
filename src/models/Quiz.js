@@ -21,9 +21,14 @@ const quizSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    answer5: {
+        type: String,
+        required: true
+
+    },
     correctAnswer: {
         type: Number,
-        enum: [1, 2, 3, 4],
+        enum: [1, 2, 3, 4, 5],
         required: true
     },
     

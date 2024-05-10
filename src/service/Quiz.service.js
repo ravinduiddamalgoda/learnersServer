@@ -1,6 +1,6 @@
 const QuizModel =  require("../models/Quiz");
 
-const addQuiz = async (quiz , answer1 , answer2 , answer3 , answer4, correctAnswer)=>
+const addQuiz = async (quiz , answer1 , answer2 , answer3 , answer4, answer5,correctAnswer)=>
 {
     const newQuiz = new QuizModel({
         quiz: quiz,
@@ -8,6 +8,7 @@ const addQuiz = async (quiz , answer1 , answer2 , answer3 , answer4, correctAnsw
         answer2: answer2,
         answer3: answer3,
         answer4: answer4,
+        answer5: answer5,
         correctAnswer: correctAnswer
     });
 

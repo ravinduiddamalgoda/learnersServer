@@ -1,8 +1,8 @@
 const QuizService = require('../service/Quiz.service');
 
 const addQuiz = async (req, res) => {
-    const { quiz, answer1, answer2, answer3, answer4, correctAnswer } = req.body;
-    const newQuiz = await QuizService.addQuiz(quiz, answer1, answer2, answer3, answer4, correctAnswer);
+    const { quiz, answer1, answer2, answer3, answer4, answer5,correctAnswer } = req.body;
+    const newQuiz = await QuizService.addQuiz(quiz, answer1, answer2, answer3, answer4, answer5,correctAnswer);
     if (newQuiz) {
         res.status(201).json(newQuiz);
     } else {

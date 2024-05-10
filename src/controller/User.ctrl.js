@@ -25,10 +25,11 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
-        console.log(username , password);
+        // console.log(username , password);
         const user = await UserService.loginUser(username, password);
-        // console.log(user); 
+        console.log(user); 
         if(!user){
+            console.log('Error')
             throw new Error("Invalid credentials");
         }
         const token =  jwt.sign({id: user.userID, isAdmin: false}, process.env.JWT_SECRET, {expiresIn: '3d'}); 
