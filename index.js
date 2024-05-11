@@ -13,7 +13,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-
 dotenv.config();
 
 
@@ -33,6 +32,8 @@ const EnrollPTSRouter = require("./src/routes/EnrollPTS.route");
 
 const VehicleRouter = require("./src/routes/vehicle.js");
 const RevenueRouter = require("./src/routes/revenue.js");
+
+const ExamRequestRouter = require("./src/routes/ExamRequest.route.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -69,7 +70,7 @@ app.use("/pts", PhysicalTrainingRoute);
 app.use("/enrollPTS", EnrollPTSRouter);
 app.use("/vehicle", VehicleRouter);
 app.use("/revenue", RevenueRouter);
-
+app.use("/examrequest", ExamRequestRouter)
 
 
 
