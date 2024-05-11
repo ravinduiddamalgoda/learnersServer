@@ -14,7 +14,24 @@ const reviewSchema = new mongoose.Schema({
     required: true,
     min: 1,
     max: 5
-  }
+  },
+  replies: [{
+    username: {
+      type: String,
+    },
+    reviewId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    reply: {
+      type: String,
+      required: true
+    },
+    createdAt: {
+      type: Date,
+      default: new Date().getTime()
+    }
+  }],
 },{ timestamps: true });
 
 const Review = mongoose.model('Review', reviewSchema);
