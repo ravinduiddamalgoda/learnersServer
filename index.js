@@ -33,6 +33,7 @@ const EnrollPTSRouter = require("./src/routes/EnrollPTS.route");
 
 const VehicleRouter = require("./src/routes/vehicle.js");
 const RevenueRouter = require("./src/routes/revenue.js");
+const QuizMarksRouter = require("./src/routes/QuizMarks.route");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -63,6 +64,8 @@ connectDB(url , {}).then(()=>{
 app.use("/quiz", QuizRoute);
 
 app.use("/quizPackage", QuizPackageRoute);
+app.use("/quizMarks", QuizMarksRouter);
+
 
 app.use("/user", userRouter);
 app.use("/pts", PhysicalTrainingRoute);
