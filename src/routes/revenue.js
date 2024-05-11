@@ -1,5 +1,7 @@
+const express = require("express");
 const router = require("express").Router();
 let Payment = require("../models/Payment");
+const nodemailer = require("nodemailer");
 
 router.route("revenue/add").post((req, res) => {
 
@@ -49,5 +51,33 @@ router.route("/revenue").post(async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// Create Nodemailer transporter
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'divyanipiyathilaka15@gmail.com', // Your email
+      pass: 'feom uzst hzah yecz'  // Your password
+    }
+  });
+
+  router.route("/send-email").post(async (req, res) => {
+    const { to, subject, html } = req.body;
+  
+    try {
+      // Send email
+      await transporter.sendMail({
+        from: 'divyanipiyathilaka15@gmail.com', // Sender email
+        to,
+        subject,
+        html
+      });
+  
+      res.json({ message: 'Email sent successfully' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      res.status(500).json({ error: 'Failed to send email' });
+    }
+  });
 
 module.exports = router;
