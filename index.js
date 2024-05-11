@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
+
 dotenv.config();
 
 
@@ -32,9 +33,15 @@ const EnrollPTSRouter = require("./src/routes/EnrollPTS.route");
 
 const VehicleRouter = require("./src/routes/vehicle.js");
 const RevenueRouter = require("./src/routes/revenue.js");
+
+const ExamRoute = require("./src/routes/ExamRequest.route.js");
+
+const ChatRoute = require("./src/routes/ChatRoute.js");
+
 const QuizMarksRouter = require("./src/routes/QuizMarks.route");
 
-const ExamRequestRouter = require("./src/routes/ExamRequest.route.js");
+
+const ChatbotRoute = require("./src/routes/ChatbotRoute.js");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -73,9 +80,9 @@ app.use("/pts", PhysicalTrainingRoute);
 app.use("/enrollPTS", EnrollPTSRouter);
 app.use("/vehicle", VehicleRouter);
 app.use("/revenue", RevenueRouter);
-app.use("/examrequest", ExamRequestRouter)
-
-
+app.use("/exam" , ExamRoute)
+app.use("/chat", ChatRoute);
+app.use("/chatbot", ChatbotRoute);
 
 // app.listen(port, () => {
 //   console.log(`Server is running on port ${port}`);
