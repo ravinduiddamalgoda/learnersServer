@@ -14,6 +14,9 @@ const {
   deleteLicensePackage,
   addReview, 
   getReview,
+  editReply,
+  deleteReply,
+  replyToReview,
   editReview,
   deleteReview,
   deleteUser, 
@@ -47,6 +50,9 @@ router.get('/getReview', verifyToken, getReview);
 router.get('/:userId', getUser);
 router.put('/editReview/:reviewId', verifyToken, editReview);
 router.delete('/deleteReview/:reviewId', verifyToken, deleteReview);
+router.put('/replyToReview/:reviewId', verifyToken, replyToReview);
+router.put('/editReply/:replyId', verifyToken, editReply);
+router.delete('/deleteReply/:reviewId/:replyId', verifyToken, deleteReply);
 
 
 

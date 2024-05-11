@@ -294,6 +294,95 @@ exports.getReview = async (req, res, next) => {
   }
 };
 
+/// --------------------- ADD REPLY TO THE REVIEW CONTROLLER -----------------------------------------------------------------------
+exports.replyToReview = async (req, res, next) => {
+  try {
+    const { reviewId, reply } = req.body;
+    
+    const review = await Review.findById(reviewId);
+    
+    if (!review) {
+      return res.status(404).json({ message: 'Review not found' });
+    }
+    
+    const newReply = {
+      userID: req.user.id,
+      reviewId: reviewId,
+      reply: reply,
+      createdAt: new Date()
+    };
+
+    review.replies.push(newReply);
+    
+    await review.save();
+
+    res.status(200).json({ message: 'Reply saved successfully', reply: newReply });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+/// --------------------- EDIT REPLY CONTROLLER -----------------------------------------------------------------------
+exports.editReply = async (req, res, next) => {
+  try{
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      return next(errorHandler(404, 'Comment not found'));
+    }
+
+    if (review.userID !== req.user.id && !req.user.isAdmin) {
+      return next(errorHandler(403, 'You are not allowed to edit this comment'));
+    }
+
+    const editedReview = await Review.findByIdAndUpdate(
+      req.params.reviewId,
+      {
+        content: req.body.content,
+      },
+      {new: true}
+    );
+
+    res.status(200).json(editedReview);
+
+  } catch (error){
+    next(error);
+  }
+};
+
+/// --------------------- DELETE REPLY CONTROLLER -----------------------------------------------------------------------
+exports.deleteReply = async (req, res, next) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      return next(errorHandler(404, 'Review not found!'));
+    }
+
+    const reply = review.replies.find(reply => reply._id.toString() === req.params.replyId);
+    if (!reply) {
+      return next(errorHandler(404, 'Reply not found!'));
+    }
+
+    if (reply.userID !== req.user.id && !req.user.isAdmin) {
+      return next(errorHandler(403, 'You are not allowed to delete this reply'));
+    }
+
+    const replyIndex = review.replies.findIndex(reply => reply._id.toString() === req.params.replyId);
+    if (replyIndex === -1) {
+      return next(errorHandler(404, 'Reply not found!'));
+    }
+
+    review.replies.splice(replyIndex, 1);
+
+    await review.save();
+
+    res.status(200).json('Reply has been deleted');
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 /// --------------------- EDIT REVIEW CONTROLLER -----------------------------------------------------------------------
 exports.editReview = async (req, res, next) => {
