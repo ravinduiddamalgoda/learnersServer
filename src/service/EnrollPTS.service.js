@@ -37,7 +37,7 @@ const getEnrollPTSById = async (id) => {
 
 const getEnrollPTSBySessionID = async (id) => {
     try {
-        const data = await EnrollPTS.findOne({sessionID : id});
+        const data = await EnrollPTS.find({sessionID : id});
         return data;
     }catch(err){
         console.error('Error in getEnrollPTS:', err);
