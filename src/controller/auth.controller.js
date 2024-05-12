@@ -181,30 +181,53 @@ exports.updateAdmin = async (req, res, next) => {
 
 exports.instructorRegistration = async (req, res, next) => {
   try {
-      
-      const highestInstructor = await Instructor.findOne({}, { InstructorID: 1 }).sort({ InstructorID: -1 }).lean();
+    const highestInstructor = await Instructor.findOne({}, { InstructorID: 1 }).sort({ InstructorID: -1 }).lean();
 
-      let nextInstructorID;
-      if (highestInstructor) {
-          
-          const highestIDNumber = parseInt(highestInstructor.InstructorID.split('_')[1]);
-          nextInstructorID = highestIDNumber + 1;
-      } else {
-          nextInstructorID = 1;
-      }
+    let nextInstructorID;
+    if (highestInstructor) {
+      const highestIDNumber = parseInt(highestInstructor.InstructorID.split('_')[1]);
+      nextInstructorID = highestIDNumber + 1;
+    } else {
+      nextInstructorID = 1;
+    }
 
-      const { InstructorName, email, password, InstructorLocation, InstructorExperience } = req.body;
-      const hashPassword = bcryptjs.hashSync(password, 10);
-      const InstructorID = `INST_${nextInstructorID}`;
+    const { InstructorName, email, password, InstructorLocation, InstructorExperience, telephone } = req.body;
 
-      const newInstructor = new Instructor({ InstructorID, InstructorName, email, password: hashPassword, InstructorLocation, InstructorExperience });
+    // Instructor name validation
+    const isValidName = /^[a-zA-Z'\s]+$/.test(InstructorName);
+    if (!isValidName) {
+      return res.status(400).json({ error: "Instructor name should only contain letters and apostrophes." });
+    }
 
-      await newInstructor.save();
-      res.status(201).json('Instructor created successfully!');
+    // Check if InstructorID already exists
+    const InstructorID = `INST_${nextInstructorID}`;
+    const existingInstructor = await Instructor.findOne({ InstructorID });
+    if (existingInstructor) {
+      return res.status(400).json({ error: "Instructor ID already exists." });
+    }
+
+    // You may also want to validate the email, password, and other fields here
+
+    const hashPassword = bcryptjs.hashSync(password, 10);
+
+    const newInstructor = new Instructor({
+      InstructorID,
+      InstructorName,
+      email,
+      password: hashPassword,
+      InstructorLocation,
+      InstructorExperience,
+      telephone
+    });
+
+    await newInstructor.save();
+    res.status(201).json('Instructor created successfully!');
   } catch (error) {
-      next(error);
+    next(error);
   }
 };
+
+
 
 
 /// --------------------- GET INSTRUCTORS CONTROLLER --------------------------------------------------------------
@@ -563,14 +586,13 @@ exports.getLicensePackage = async (req, res, next) => {
 
 const licensePkgUploadStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'LearnersFrontEnd/src/assets/LicensePkgs');
+    cb(null, '../LearnersFrontEnd/src/assets/LicensePkgs');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
     cb(null, uniqueSuffix + file.originalname);
   }
 });
-
 
 const uploadLicensePkgImage = multer({ storage: licensePkgUploadStorage });
 
@@ -579,29 +601,34 @@ exports.updateLicensePackage = async (req, res, next) => {
     return next(errorHandler(403, 'You are not allowed to update this post'));
   }
   try {
-   
-    if (req.file) {
-    
-      req.body.image = req.file.filename;
-    }
-    
-    const updatedPackage = await LicensePackage.findByIdAndUpdate(
-      req.params.packageId,
-      {
-        $set: {
-          packageName: req.body.packageName,
-          description: req.body.description,
-          price: req.body.price,
-          image: req.body.image,
-        },
-      }, 
-      { new: true }
-    );
-    res.status(200).json(updatedPackage);
-  } catch(error) {
+    uploadLicensePkgImage.single('image')(req, res, async (err) => {
+      if (err) {
+        return next(err);
+      }
+
+      const updateFields = {
+        packageName: req.body.packageName,
+        description: req.body.description,
+        price: req.body.price,
+      };
+
+      if (req.file) {
+        updateFields.image = req.file.filename;
+      }
+
+      const updatedPackage = await LicensePackage.findByIdAndUpdate(
+        req.params.packageId,
+        { $set: updateFields },
+        { new: true }
+      );
+      
+      res.status(200).json(updatedPackage);
+    });
+  } catch (error) {
     next(error);
   }
 };
+
 
 
 /// --------------------- DELETE LICENSE PACKAGE CONTROLLER --------------------------------------------------------------
