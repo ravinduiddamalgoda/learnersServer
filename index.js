@@ -44,6 +44,8 @@ const QuizMarksRouter = require("./src/routes/QuizMarks.route");
 const ChatbotRoute = require("./src/routes/ChatbotRoute.js");
 const InstructorSalaryRouter = require("./src/routes/InstructorSalary.route.js");
 
+const PTSReportRoute = require("./src/routes/PTSReportRoute.js")
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -84,7 +86,9 @@ app.use("/revenue", RevenueRouter);
 app.use("/exam" , ExamRoute)
 app.use("/chat", ChatRoute);
 app.use("/chatbot", ChatbotRoute);
+app.use("/ptsreport", PTSReportRoute);
 app.use("/salary",InstructorSalaryRouter)
+
 
 // app.listen(port, () => {
 //   console.log(`Server is running on port ${port}`);
