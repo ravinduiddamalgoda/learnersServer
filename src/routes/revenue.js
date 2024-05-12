@@ -92,8 +92,8 @@ router.route("/revenueByUser/:username").get(async (req, res) => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'divyanipiyathilaka15@gmail.com', // Your email
-      pass: 'feom uzst hzah yecz'  // Your password
+      user: 'sarasavi.lern@gmail.com', // Your email
+      pass: 'gwsqudvnqrwppkof'  // Your password
     }
   });
 
@@ -103,7 +103,7 @@ const transporter = nodemailer.createTransport({
     try {
       // Send email
       await transporter.sendMail({
-        from: 'divyanipiyathilaka15@gmail.com', // Sender email
+        from: 'sarasavi.lern@gmail.com', // Sender email
         to,
         subject,
         html
