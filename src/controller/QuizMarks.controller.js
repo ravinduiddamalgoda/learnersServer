@@ -1,9 +1,15 @@
 const QuizMarkService = require('../service/QuizMarks.service');
-
+const UserServices = require('../service/User.service');
+const emailSend = require('../service/SendEmail');
 const addQuizMarks = async (req, res) => {
     try {
         const { quizPackageID, userID, marks } = req.body;
         const quizMarks = await QuizMarkService.addQuizMarks(quizPackageID, userID, marks);
+        const userData = await UserServices.getUserProfile(userID);
+        const email = userData.email;
+        const subject = "Quiz Marks";
+        const text = `You have scored ${marks} marks in the quiz`;
+        emailSend.sendmail(email, subject, text);
         res.status(201).json(quizMarks);
     } catch (error) {
         res.status(500).json({ error: error.message });

@@ -39,7 +39,7 @@ router.route("/add").post(async (req, res) => {
 router.route("/").get((req, res) => {
 
     Vehicle.find().then((vehicles) => {
-        console.log(vehicles);
+        // console.log(vehicles);
         res.json(vehicles)
 }).catch((err) => {
     console.log(err);
